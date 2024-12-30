@@ -1,2 +1,2 @@
-# network-dashboard
-dashboard for seeing your networth
+# networth-dashboard
+dashboard for seeing your net worth

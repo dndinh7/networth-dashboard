@@ -1,5 +1,6 @@
 services:
   client:
+    container_name: client-container
     build:
       context: ./client
       dockerfile: Dockerfile
@@ -9,6 +10,7 @@ services:
       - server
 
   server:
+    container_name: server-container
     build:
       context: ./server
       dockerfile: Dockerfile
@@ -23,7 +25,7 @@ services:
 
   db:
     image: postgres:17
-    container_name: postgres-container
+    container_name: db-container
     ports:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     environment:
@@ -32,6 +34,7 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - db-data:/var/lib/postgresql/data
+      - ./initTable.sql:/docker-entrypoint-initdb.d/initTable.sql
 
 volumes:
   db-data:
