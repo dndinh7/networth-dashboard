@@ -2,7 +2,7 @@ CREATE TABLE "Assets"(
     "id" BIGINT NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "category" VARCHAR(255) NOT NULL,
-    "value" DECIMAL(8, 2) NOT NULL,
+    "value" DECIMAL(16, 2) NOT NULL,
     "user_id" BIGINT NOT NULL,
     "interest" DECIMAL(8, 2) NULL,
     "acquired_at" DATE NULL,
@@ -29,7 +29,7 @@ CREATE TABLE "Liabilities"(
     "id" BIGINT NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "category" VARCHAR(255) NOT NULL,
-    "value" DECIMAL(8, 2) NOT NULL,
+    "value" DECIMAL(16, 2) NOT NULL,
     "user_id" BIGINT NOT NULL,
     "due_at" DATE NULL,
     "interest" DECIMAL(8, 2) NULL,
@@ -76,7 +76,8 @@ CREATE TABLE "Transactions"(
     "name" VARCHAR(255) NOT NULL,
     "done_at" DATE NOT NULL,
     "created_at" DATE NOT NULL,
-    "value" DECIMAL(8, 2) NOT NULL
+    "value" DECIMAL(16, 2) NOT NULL
+    "category" VARCHAR(255) NOT NULL,
 );
 ALTER TABLE
     "Transactions" ADD PRIMARY KEY("id");
@@ -88,9 +89,11 @@ CREATE INDEX "transactions_created_at_index" ON
     "Transactions"("created_at");
 CREATE INDEX "transactions_value_index" ON
     "Transactions"("value");
+CREATE INDEX "transactions_category_index" ON
+    "Transactions"("category");
 ALTER TABLE
-    "Assets" ADD CONSTRAINT "assets_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "Users"("id");
+    "Assets" ADD CONSTRAINT "assets_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "Users"("id") ON DELETE CASCADE;
 ALTER TABLE
-    "Liabilities" ADD CONSTRAINT "liabilities_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "Users"("id");
+    "Liabilities" ADD CONSTRAINT "liabilities_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "Users"("id") ON DELETE CASCADE;
 ALTER TABLE
-    "Transactions" ADD CONSTRAINT "transactions_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "Users"("id");
+    "Transactions" ADD CONSTRAINT "transactions_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "Users"("id") ON DELETE CASCADE;
