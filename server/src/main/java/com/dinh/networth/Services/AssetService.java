@@ -2,6 +2,7 @@ package com.dinh.networth.Services;
 
 import com.dinh.networth.Models.Asset;
 import com.dinh.networth.Repository.AssetRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 public class AssetService {
     private final AssetRepository assetRepository;
 
+    @Autowired
     public AssetService(AssetRepository assetRepository) {
         this.assetRepository= assetRepository;
     }
