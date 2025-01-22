@@ -1,5 +1,6 @@
 package com.dinh.networth.ViewModels;
 
+import com.dinh.networth.Models.User;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import java.time.LocalDateTime;
@@ -17,5 +18,14 @@ public class UserViewModel {
         this.name= name;
         this.email= email;
         this.createdAt= createdAt;
+    }
+
+    public UserViewModel(User user) {
+        this.id= user.getId();
+        this.name= user.getName();
+        this.email= user.getEmail();
+        this.createdAt= user.getCreatedAt();
+
+
     }
 }

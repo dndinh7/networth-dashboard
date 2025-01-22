@@ -9,12 +9,8 @@ import java.util.List;
 
 @Service
 public class AssetService {
-    private final AssetRepository assetRepository;
-
     @Autowired
-    public AssetService(AssetRepository assetRepository) {
-        this.assetRepository= assetRepository;
-    }
+    private AssetRepository assetRepository;
 
     public Asset getAssetById(Long id) {
         return assetRepository.findById(id).orElseThrow(() -> new RuntimeException("Asset with " + id + " does not exist."));

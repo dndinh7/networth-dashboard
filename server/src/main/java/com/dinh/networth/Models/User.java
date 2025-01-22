@@ -66,7 +66,7 @@ public class User implements UserDetails {
         this.name= name;
     }
 
-    public String email() {
+    public String getEmail() {
         return email;
     }
 
@@ -140,6 +140,11 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    // Should be encoded
+    public void setPassword(String encodedPassword) {
+        this.password= encodedPassword;
     }
 
 }
