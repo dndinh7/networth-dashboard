@@ -60,7 +60,9 @@ CREATE TABLE "Users"(
     "name" VARCHAR(255) NOT NULL,
     "email" VARCHAR(255) NOT NULL,
     "created_at" DATE NOT NULL,
-    "password_hash" BIGINT NOT NULL
+    "password_hash" BIGINT NOT NULL,
+    "is_verified" BOOLEAN NOT NULL DEFAULT FALSE,
+    "is_active" BOOLEAN NOT NULL DEFAULT TRUE,
 );
 ALTER TABLE
     "Users" ADD PRIMARY KEY("id");

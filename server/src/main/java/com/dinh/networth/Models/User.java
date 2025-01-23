@@ -26,8 +26,14 @@ public class User implements UserDetails {
     @Column(name = "password_hash", nullable = false)
     private String password;
 
+    @Column(name = "is_verified", nullable = false)
+    private boolean isVerified= false;
+
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive= true;
+
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt= LocalDateTime.now();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Asset> assets = new ArrayList<>();
@@ -38,6 +44,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transaction> transactions = new ArrayList<>();
 
+    /*
     protected User() {}
 
     public User(String firstName, String lastName, String email, List<Asset> assets, List<Liability> liabilities, List<Transaction> transactions) {
@@ -48,6 +55,7 @@ public class User implements UserDetails {
         this.liabilities= liabilities;
         this.transactions= transactions;
     }
+    */
 
     @Override
     public String toString() {
@@ -145,6 +153,22 @@ public class User implements UserDetails {
     // Should be encoded
     public void setPassword(String encodedPassword) {
         this.password= encodedPassword;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive= isActive;
+    }
+
+    public boolean getIsVerified() {
+        return isVerified;
+    }
+
+    public void setIsVerified(boolean isVerified) {
+        this.isVerified= isVerified;
     }
 
 }

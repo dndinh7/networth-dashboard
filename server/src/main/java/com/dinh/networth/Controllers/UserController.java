@@ -16,6 +16,4 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @PostMapping("/generateToken")
-    public String authenticateAndGetToken()
 }

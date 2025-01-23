@@ -1,7 +1,6 @@
 package com.dinh.networth.Helpers;
 
 import com.dinh.networth.Models.User;
-import com.dinh.networth.Services.AuthenticationService;
 import com.dinh.networth.Services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -19,7 +18,7 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
-    private AuthenticationService authenticationService;
+    private JwtAuthenticationUtility jwtAuthenticationUtility;
 
     @Autowired
     private UserService userService;
@@ -32,13 +31,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (headerAuth != null && headerAuth.startsWith("Bearer ")) {
             token= headerAuth.substring(7);
-            username= authenticationService.extractUsername(token);
+            username= jwtAuthenticationUtility.extractUsername(token);
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             User user= userService.loadUserByUsername(username);
 
-            if (authenticationService.validateToken(token, user)) {
+            if (jwtAuthenticationUtility.validateToken(token, user)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         user,
                         null,

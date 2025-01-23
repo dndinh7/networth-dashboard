@@ -1,5 +1,6 @@
 package com.dinh.networth.ViewModels;
 
+import com.dinh.networth.Helpers.EncryptionHelper;
 import com.dinh.networth.Models.User;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
@@ -21,11 +22,13 @@ public class UserViewModel {
     }
 
     public UserViewModel(User user) {
-        this.id= user.getId();
+        try {
+            this.id= EncryptionHelper.encrypt(user.getId().toString());
+        } catch (Exception e) {
+            System.err.println("Could not encrypt id");
+        }
         this.name= user.getName();
         this.email= user.getEmail();
         this.createdAt= user.getCreatedAt();
-
-
     }
 }
