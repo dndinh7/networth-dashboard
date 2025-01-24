@@ -78,7 +78,7 @@ CREATE TABLE "Transactions"(
     "name" VARCHAR(255) NOT NULL,
     "done_at" DATE NOT NULL,
     "created_at" DATE NOT NULL,
-    "value" DECIMAL(16, 2) NOT NULL
+    "value" DECIMAL(16, 2) NOT NULL,
     "category" VARCHAR(255) NOT NULL,
 );
 ALTER TABLE

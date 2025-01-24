@@ -16,10 +16,10 @@ import java.util.function.Function;
 
 @Component
 public class JwtAuthenticationUtility {
-    @Value("${security.jwt.key")
+    @Value("${security.jwt.key}")
     private String key;
 
-    @Value("${security.jwt.expiration-time")
+    @Value("${security.jwt.expiration-time}")
     private Long expirationTime;
 
     // Lazy evaluation
