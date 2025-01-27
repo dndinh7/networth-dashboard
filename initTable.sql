@@ -1,101 +1,104 @@
-CREATE TABLE "Assets"(
-    "id" BIGINT NOT NULL,
+CREATE TABLE "assets"(
+    "id" BIGSERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "category" VARCHAR(255) NOT NULL,
     "value" DECIMAL(16, 2) NOT NULL,
     "user_id" BIGINT NOT NULL,
     "interest" DECIMAL(8, 2) NULL,
-    "acquired_at" DATE NULL,
-    "created_at" DATE NOT NULL
+    "acquired_at" TIMESTAMP NULL,
+    "created_at" TIMESTAMP NOT NULL
 );
 ALTER TABLE
-    "Assets" ADD PRIMARY KEY("id");
+    "assets" ADD PRIMARY KEY("id");
 CREATE INDEX "assets_category_index" ON
-    "Assets"("category");
+    "assets"("category");
 CREATE INDEX "assets_value_index" ON
-    "Assets"("value");
+    "assets"("value");
 CREATE INDEX "assets_user_id_index" ON
-    "Assets"("user_id");
+    "assets"("user_id");
 CREATE INDEX "assets_interest_index" ON
-    "Assets"("interest");
+    "assets"("interest");
 CREATE INDEX "assets_acquired_at_index" ON
-    "Assets"("acquired_at");
+    "assets"("acquired_at");
 CREATE INDEX "assets_created_at_index" ON
-    "Assets"("created_at");
+    "assets"("created_at");
 COMMENT
 ON COLUMN
-    "Assets"."category" IS 'this would be the type of asset (e.g. Securities, Cash, Real Estate)';
-CREATE TABLE "Liabilities"(
-    "id" BIGINT NOT NULL,
+    "assets"."category" IS 'this would be the type of asset (e.g. Securities, Cash, Real Estate)';
+CREATE TABLE "liabilities"(
+    "id" BIGSERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "category" VARCHAR(255) NOT NULL,
     "value" DECIMAL(16, 2) NOT NULL,
     "user_id" BIGINT NOT NULL,
-    "due_at" DATE NULL,
+    "due_at" TIMESTAMP NULL,
     "interest" DECIMAL(8, 2) NULL,
-    "acquired_at" DATE NULL,
-    "created_at" DATE NOT NULL
+    "acquired_at" TIMESTAMP NULL,
+    "created_at" TIMESTAMP NOT NULL
 );
 ALTER TABLE
-    "Liabilities" ADD PRIMARY KEY("id");
+    "liabilities" ADD PRIMARY KEY("id");
 CREATE INDEX "liabilities_category_index" ON
-    "Liabilities"("category");
+    "liabilities"("category");
 CREATE INDEX "liabilities_value_index" ON
-    "Liabilities"("value");
+    "liabilities"("value");
 CREATE INDEX "liabilities_user_id_index" ON
-    "Liabilities"("user_id");
+    "liabilities"("user_id");
 CREATE INDEX "liabilities_due_at_index" ON
-    "Liabilities"("due_at");
+    "liabilities"("due_at");
 CREATE INDEX "liabilities_interest_index" ON
-    "Liabilities"("interest");
+    "liabilities"("interest");
 CREATE INDEX "liabilities_acquired_at_index" ON
-    "Liabilities"("acquired_at");
+    "liabilities"("acquired_at");
 CREATE INDEX "liabilities_created_at_index" ON
-    "Liabilities"("created_at");
+    "liabilities"("created_at");
 COMMENT
 ON COLUMN
-    "Liabilities"."category" IS 'this would be the type (e.g. loans, credit cards, mortgages)';
-CREATE TABLE "Users"(
-    "id" BIGINT NOT NULL,
+    "liabilities"."category" IS 'this would be the type (e.g. loans, credit cards, mortgages)';
+CREATE TABLE "users"(
+    "id" BIGSERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "email" VARCHAR(255) NOT NULL,
-    "created_at" DATE NOT NULL,
-    "password_hash" BIGINT NOT NULL,
+    "created_at" TIMESTAMP NOT NULL,
+    "password_hash" VARCHAR(255) NOT NULL,
+    "role" VARCHAR(255) NULL,
     "is_verified" BOOLEAN NOT NULL DEFAULT FALSE,
-    "is_active" BOOLEAN NOT NULL DEFAULT TRUE,
+    "is_active" BOOLEAN NOT NULL DEFAULT TRUE
 );
 ALTER TABLE
-    "Users" ADD PRIMARY KEY("id");
+    "users" ADD PRIMARY KEY("id");
+ALTER TABLE users
+    ADD CONSTRAINT unique_email UNIQUE (email);
 CREATE INDEX "users_name_index" ON
-    "Users"("name");
+    "users"("name");
 CREATE INDEX "users_email_index" ON
-    "Users"("email");
+    "users"("email");
 CREATE INDEX "users_created_at_index" ON
-    "Users"("created_at");
-CREATE TABLE "Transactions"(
-    "id" BIGINT NOT NULL,
+    "users"("created_at");
+CREATE TABLE "transactions"(
+    "id" BIGSERIAL NOT NULL,
     "user_id" BIGINT NOT NULL,
     "name" VARCHAR(255) NOT NULL,
-    "done_at" DATE NOT NULL,
-    "created_at" DATE NOT NULL,
+    "done_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP NOT NULL,
     "value" DECIMAL(16, 2) NOT NULL,
-    "category" VARCHAR(255) NOT NULL,
+    "category" VARCHAR(255) NOT NULL
 );
 ALTER TABLE
-    "Transactions" ADD PRIMARY KEY("id");
+    "transactions" ADD PRIMARY KEY("id");
 CREATE INDEX "transactions_user_id_index" ON
-    "Transactions"("user_id");
+    "transactions"("user_id");
 CREATE INDEX "transactions_done_at_index" ON
-    "Transactions"("done_at");
+    "transactions"("done_at");
 CREATE INDEX "transactions_created_at_index" ON
-    "Transactions"("created_at");
+    "transactions"("created_at");
 CREATE INDEX "transactions_value_index" ON
-    "Transactions"("value");
+    "transactions"("value");
 CREATE INDEX "transactions_category_index" ON
-    "Transactions"("category");
+    "transactions"("category");
 ALTER TABLE
-    "Assets" ADD CONSTRAINT "assets_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "Users"("id") ON DELETE CASCADE;
+    "assets" ADD CONSTRAINT "assets_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "users"("id") ON DELETE CASCADE;
 ALTER TABLE
-    "Liabilities" ADD CONSTRAINT "liabilities_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "Users"("id") ON DELETE CASCADE;
+    "liabilities" ADD CONSTRAINT "liabilities_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "users"("id") ON DELETE CASCADE;
 ALTER TABLE
-    "Transactions" ADD CONSTRAINT "transactions_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "Users"("id") ON DELETE CASCADE;
+    "transactions" ADD CONSTRAINT "transactions_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "users"("id") ON DELETE CASCADE;

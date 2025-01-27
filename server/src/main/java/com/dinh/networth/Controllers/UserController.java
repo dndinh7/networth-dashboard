@@ -16,4 +16,8 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }
 }
