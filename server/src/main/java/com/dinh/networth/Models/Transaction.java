@@ -16,32 +16,23 @@ public class Transaction {
     @Column(nullable = false)
     private String name;
 
-    @Column(name = "created_at", nullable= false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "done_at", nullable= false)
-    private LocalDateTime doneAt;
+    @Column(nullable= false)
+    private LocalDateTime date;
 
     @Column(nullable = false)
     private BigDecimal value;
-
-    @Column(nullable = false)
-    private String category;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    protected Transaction() {}
+    @Column(name = "is_credit", nullable = false)
+    private boolean isCredit;
 
-    public Transaction(String name, BigDecimal value, String category, User user, LocalDateTime doneAt) {
-        this.name= name;
-        this.value= value;
-        this.user= user;
-        this.doneAt= doneAt;
-        this.createdAt= LocalDateTime.now();
-        this.category= category;
-    }
+    @Column(nullable = true)
+    private String source;
+
+    protected Transaction() {}
 
     public String getName() {
         return name;
@@ -59,32 +50,40 @@ public class Transaction {
         this.value= value;
     }
 
-    public LocalDateTime getDoneAt() {
-        return doneAt;
-    }
-
-    public void setDoneAt(LocalDateTime doneAt) {
-        this.doneAt= doneAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public User getUser() {
         return user;
     }
 
-    public String getCategory() {
-        return category;
+    public void setUser(User user) {
+        this.user= user;
     }
 
-    public void setCategory() {
-        this.category= category;
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date= date;
+    }
+
+    public boolean getIsCredit() {
+        return isCredit;
+    }
+
+    public void setIsCredit(boolean isCredit) {
+        this.isCredit= isCredit;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source= source;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.name, this.category, this.value, this.doneAt, this.createdAt, this.user);
+        return Objects.hash(this.id, this.name, this.value, this.user, this.isCredit, this.date, this.source);
     }
 }

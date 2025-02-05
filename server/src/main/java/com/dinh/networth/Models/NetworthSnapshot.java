@@ -7,31 +7,24 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "assets")
-public abstract class Asset {
+@Table(name = "networth_snapshots")
+public class NetworthSnapshot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Version
-    private int version;
-
-    @Column(nullable= false)
-    private LocalDateTime date;
-
     @Column(nullable = false)
-    private String name;
+    private int version= 1;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false)
     private User user;
-
-    @Column(nullable = true)
-    private String source;
 
     @Column(nullable = false)
     private BigDecimal value;
+
+    @Column(nullable = false)
+    private LocalDateTime date;
 
     public Long getId() {
         return id;
@@ -45,22 +38,6 @@ public abstract class Asset {
         this.version= version;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name= name;
-    }
-
-    public BigDecimal getValue() {
-        return value;
-    }
-
-    public void setValue(BigDecimal value) {
-        this.value= value;
-    }
-
     public User getUser() {
         return user;
     }
@@ -69,12 +46,12 @@ public abstract class Asset {
         this.user= user;
     }
 
-    public String getSource() {
-        return this.source;
+    public BigDecimal getValue() {
+        return value;
     }
 
-    public void setSource(String source) {
-        this.source= source;
+    public void setValue(BigDecimal value) {
+        this.value= value;
     }
 
     public LocalDateTime getDate() {
@@ -87,6 +64,6 @@ public abstract class Asset {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.version, this.date, this.name, this.user, this.value, this.source);
+        return Objects.hash(this.id, this.version, this.value, this.user, this.date);
     }
 }

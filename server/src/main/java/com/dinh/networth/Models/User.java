@@ -47,19 +47,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transaction> transactions = new ArrayList<>();
 
-    /*
-    protected User() {}
-
-    public User(String firstName, String lastName, String email, List<Asset> assets, List<Liability> liabilities, List<Transaction> transactions) {
-        this.name= String.join(",", lastName, firstName);
-        this.email= email;
-        this.createdAt= LocalDateTime.now();
-        this.assets= assets;
-        this.liabilities= liabilities;
-        this.transactions= transactions;
-    }
-    */
-
     @Override
     public String toString() {
         return String.format("User[id=%d, name='%s', email='%s', createdAt=%s]", id, name, email, createdAt);

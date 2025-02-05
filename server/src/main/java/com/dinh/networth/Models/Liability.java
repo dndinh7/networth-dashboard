@@ -7,17 +7,18 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "liabilities")
-public class Liability {
+public abstract class Liability {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    @Version
+    private int version;
 
     @Column(nullable = false)
-    private String category;
+    private String name;
 
     @Column(nullable = false)
     private BigDecimal value;
@@ -27,37 +28,35 @@ public class Liability {
     private User user;
 
     @Column(nullable= true)
-    private BigDecimal interest;
+    private double interest;
 
     @Column(name = "due_at", nullable= true)
     private LocalDateTime dueAt;
 
-    @Column(name = "acquired_at", nullable= true)
-    private LocalDateTime acquiredAt;
+    @Column(nullable = true)
+    private LocalDateTime date;
 
-    @Column(name = "created_at", nullable= false, updatable = false)
-    private LocalDateTime createdAt;
-
-    protected Liability() {}
-
-    public Liability(String name, String category, BigDecimal value, User user, BigDecimal interest, LocalDateTime dueAt, LocalDateTime acquiredAt) {
-        this.name= name;
-        this.category= category;
-        this.value= value;
-        this.user= user;
-        this.interest= interest;
-        this.dueAt= dueAt;
-        this.acquiredAt= acquiredAt;
-        this.createdAt= LocalDateTime.now();
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Asset[id=%s, name=%s, category=%s, value=%f, userId=%s, interest=%f, dueAt=%s, acquiredAt=%s, createdAt=%s]", id, name, category, value, user.getId(), interest, dueAt, acquiredAt, createdAt);
-    }
+    @Column(nullable = true)
+    private String source;
 
     public Long getId() {
         return id;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version= version;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date= date;
     }
 
     public String getName() {
@@ -66,14 +65,6 @@ public class Liability {
 
     public void setName(String name) {
         this.name= name;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category= category;
     }
 
     public BigDecimal getValue() {
@@ -92,24 +83,12 @@ public class Liability {
         this.user= user;
     }
 
-    public BigDecimal getInterest() {
+    public double getInterest() {
         return interest;
     }
 
-    public void setInterest(BigDecimal interest) {
+    public void setInterest(double interest) {
         this.interest= interest;
-    }
-
-    public LocalDateTime getAcquiredAt() {
-        return acquiredAt;
-    }
-
-    public void setAcquiredAt(LocalDateTime acquiredAt) {
-        this.acquiredAt= acquiredAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
     }
 
     public LocalDateTime getDueAt() {
@@ -120,8 +99,16 @@ public class Liability {
         this.dueAt= dueAt;
     }
 
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source= source;
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.name, this.category, this.value, this.user, this.interest, this.acquiredAt, this.createdAt, this.dueAt);
+        return Objects.hash(this.id, this.version, this.date, this.name, this.value, this.user, this.interest, this.dueAt, this.source);
     }
 }

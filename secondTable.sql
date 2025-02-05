@@ -1,6 +1,25 @@
+CREATE TABLE "users"(
+    "id" BIGSERIAL PRIMARY KEY,
+    "name" VARCHAR(255) NOT NULL,
+    "email" VARCHAR(255) NOT NULL,
+    "created_at" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
+    "password_hash" BIGINT NOT NULL,
+    "is_verified" BOOLEAN NOT NULL,
+    "role" VARCHAR(255) NULL,
+    "is_active" BOOLEAN NOT NULL
+);
+CREATE INDEX "users_name_index" ON
+    "users"("name");
+CREATE UNIQUE INDEX "users_email_index" ON
+    "users"("email");
+CREATE INDEX "users_created_at_index" ON
+    "users"("created_at");
+CREATE INDEX "users_role_index" ON
+    "users"("role");
+    
 CREATE TABLE "assets"(
     "id" BIGSERIAL PRIMARY KEY,
-    "version" INT NOT NULL,
+    "version" INT NOT NULL DEFAULT 1,
     "date" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "user_id" BIGINT NOT NULL,
@@ -23,7 +42,7 @@ CREATE INDEX "assets_source_index" ON
 
 CREATE TABLE "liabilities"(
     "id" BIGSERIAL PRIMARY KEY,
-    "version" INT NOT NULL,
+    "version" INT NOT NULL DEFAULT 1,
     "date" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "user_id" BIGINT NOT NULL,
@@ -50,25 +69,6 @@ CREATE INDEX "liabilities_due_at_index" ON
 CREATE INDEX "liabilities_source_index" ON
     "liabilities"("source");
 
-CREATE TABLE "users"(
-    "id" BIGSERIAL PRIMARY KEY,
-    "name" VARCHAR(255) NOT NULL,
-    "email" VARCHAR(255) NOT NULL,
-    "created_at" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
-    "password_hash" BIGINT NOT NULL,
-    "is_verified" BOOLEAN NOT NULL,
-    "role" VARCHAR(255) NULL,
-    "is_active" BOOLEAN NOT NULL
-);
-CREATE INDEX "users_name_index" ON
-    "users"("name");
-CREATE UNIQUE INDEX "users_email_index" ON
-    "users"("email");
-CREATE INDEX "users_created_at_index" ON
-    "users"("created_at");
-CREATE INDEX "users_role_index" ON
-    "users"("role");
-
 CREATE TABLE "transactions"(
     "id" BIGSERIAL PRIMARY KEY,
     "date" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
@@ -76,6 +76,7 @@ CREATE TABLE "transactions"(
     "user_id" BIGINT NOT NULL,
     "value" DECIMAL(16, 2) NOT NULL,
     "is_credit" BOOLEAN NOT NULL,
+    "source" VARCHAR(255) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 CREATE INDEX "transactions_date_index" ON
@@ -122,7 +123,7 @@ CREATE INDEX "cash_interest_index" ON
 
 CREATE TABLE "networth_snapshot"(
     "id" BIGSERIAL PRIMARY KEY,
-    "version" INT NOT NULL,
+    "version" INT NOT NULL DEFAULT 1,
     "user_id" BIGINT NOT NULL,
     "value" DECIMAL(16, 2) NOT NULL,
     "date" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
