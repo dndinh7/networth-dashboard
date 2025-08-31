@@ -3,7 +3,7 @@ package com.dinh.networth.Models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "loan")
+@Table(name = "loans")
 public class Loan extends Liability {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

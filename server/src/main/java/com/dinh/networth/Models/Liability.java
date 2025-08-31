@@ -27,8 +27,8 @@ public abstract class Liability {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(nullable= true)
-    private double interest;
+    @Column(nullable = true, precision = 5, scale = 2)
+    private BigDecimal interest;
 
     @Column(name = "due_at", nullable= true)
     private LocalDateTime dueAt;
@@ -83,11 +83,11 @@ public abstract class Liability {
         this.user= user;
     }
 
-    public double getInterest() {
+    public BigDecimal getInterest() {
         return interest;
     }
 
-    public void setInterest(double interest) {
+    public void setInterest(BigDecimal interest) {
         this.interest= interest;
     }
 

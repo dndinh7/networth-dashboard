@@ -1,5 +1,6 @@
 package com.dinh.networth.Models;
 
+import java.math.BigDecimal;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,8 +14,8 @@ public class Cash extends Asset {
     @JoinColumn(name = "asset_id", nullable = false)
     private Asset asset;
 
-    @Column(nullable = true)
-    private double interest;
+    @Column(nullable = true, precision = 5, scale = 2)
+    private BigDecimal interest;
 
     public Long getId() {
         return id;
@@ -28,11 +29,11 @@ public class Cash extends Asset {
         this.asset= asset;
     }
 
-    public double getInterest() {
+    public BigDecimal getInterest() {
         return interest;
     }
 
-    public void setInterest(double interest) {
+    public void setInterest(BigDecimal interest) {
         this.interest= interest;
     }
 }
