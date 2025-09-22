@@ -3,7 +3,7 @@ CREATE TABLE "users"(
     "name" VARCHAR(255) NOT NULL,
     "email" VARCHAR(255) NOT NULL,
     "created_at" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
-    "password_hash" BIGINT NOT NULL,
+    "password_hash" VARCHAR(255) NOT NULL,
     "is_verified" BOOLEAN NOT NULL,
     "role" VARCHAR(255) NULL,
     "is_active" BOOLEAN NOT NULL
