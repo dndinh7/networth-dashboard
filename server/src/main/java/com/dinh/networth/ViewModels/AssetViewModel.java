@@ -8,22 +8,22 @@ import java.time.LocalDateTime;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class AssetViewModel {
     private String id;
+    private int version;
+    private LocalDateTime date;
     private String name;
-    private String category;
-    private BigDecimal value;
     private String userId;
+    private BigDecimal value;
+    private String source;
     private BigDecimal interest;
-    private LocalDateTime acquiredAt;
-    private LocalDateTime createdAt;
 
-    public AssetViewModel(String id, String name, String category, BigDecimal value, String userId, BigDecimal interest, LocalDateTime acquiredAt, LocalDateTime createdAt) {
+    public AssetViewModel(String id, int version, LocalDateTime date, String name, String userId, BigDecimal value, String source, BigDecimal interest) {
         this.id= id;
+        this.version= version;
+        this.date= date;
         this.name= name;
-        this.category= category;
-        this.value= value;
         this.userId= userId;
+        this.value= value;
+        this.source= source;
         this.interest= interest;
-        this.acquiredAt= acquiredAt;
-        this.createdAt= createdAt;
     }
 }

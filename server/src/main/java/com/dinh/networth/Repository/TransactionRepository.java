@@ -16,8 +16,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     List<Transaction> findByNameContaining(String name);
 
-    List<Transaction> findByCategory(String category);
-
     List<Transaction> findByUser(User user);
     List<Transaction> findByUserId(Long userId);
 
@@ -27,20 +25,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findByValueGreaterThan(BigDecimal value);
     List<Transaction> findByValue(BigDecimal value);
 
-    List<Transaction> findByCategoryAndValue(String category, BigDecimal value);
-    List<Transaction> findByCategoryAndValueLessThanEqual(String category, BigDecimal value);
-    List<Transaction> findByCategoryAndValueLessThan(String category, BigDecimal value);
-    List<Transaction> findByCategoryAndValueGreaterThanEqual(String category, BigDecimal value);
-    List<Transaction> findByCategoryAndValueGreaterThan(String category, BigDecimal value);
-
-    List<Transaction> findByDoneAt(LocalDateTime doneAt);
-    List<Transaction> findByDoneAtBetween(LocalDateTime startAt, LocalDateTime endAt);
-    List<Transaction> findByDoneAtBefore(LocalDateTime doneAt);
-    List<Transaction> findByDoneAtAfter(LocalDateTime doneAt);
-
-    List<Transaction> findByCreatedAt(LocalDateTime createdAt);
-    List<Transaction> findByCreatedAtBetween(LocalDateTime startAt, LocalDateTime endAt);
-    List<Transaction> findByCreatedAtBefore(LocalDateTime createdAt);
-    List<Transaction> findByCreatedAtAfter(LocalDateTime createdAt);
-
+    List<Transaction> findByDate(LocalDateTime date);
+    List<Transaction> findByDateBetween(LocalDateTime start, LocalDateTime end);
+    List<Transaction> findByDateBefore(LocalDateTime date);
+    List<Transaction> findByDateAfter(LocalDateTime date);
 }

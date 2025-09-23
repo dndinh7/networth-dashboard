@@ -19,8 +19,4 @@ public class AssetService {
     public List<Asset> getAssetByUserId(Long userId) {
         return assetRepository.findByUserId(userId);
     }
-
-    public List<Asset> getAssetByCategory(String category) {
-        return assetRepository.findByCategory(category);
-    }
 }

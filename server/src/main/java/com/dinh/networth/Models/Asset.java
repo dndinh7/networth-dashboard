@@ -33,6 +33,9 @@ public abstract class Asset {
     @Column(nullable = false)
     private BigDecimal value;
 
+    @Column(nullable = true, precision = 5, scale = 2)
+    private BigDecimal interest;
+
     public Long getId() {
         return id;
     }

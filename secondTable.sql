@@ -16,6 +16,8 @@ CREATE INDEX "users_created_at_index" ON
     "users"("created_at");
 CREATE INDEX "users_role_index" ON
     "users"("role");
+CREATE INDEX "users_is_active_index" ON
+    "users"("is_active");
     
 CREATE TABLE "assets"(
     "id" BIGSERIAL PRIMARY KEY,
@@ -25,6 +27,7 @@ CREATE TABLE "assets"(
     "user_id" BIGINT NOT NULL,
     "value" DECIMAL(16, 2) NOT NULL,
     "source" VARCHAR(255) NULL,
+    "interest" DECIMAL(5, 2) NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 CREATE INDEX "assets_version_index" ON
@@ -39,6 +42,9 @@ CREATE INDEX "assets_value_index" ON
     "assets"("value");
 CREATE INDEX "assets_source_index" ON
     "assets"("source");
+create index "assets_interest_index" on
+    "assets"("interest");
+    
 
 CREATE TABLE "liabilities"(
     "id" BIGSERIAL PRIMARY KEY,
@@ -62,7 +68,7 @@ CREATE INDEX "liabilities_user_id_index" ON
     "liabilities"("user_id");
 CREATE INDEX "liabilities_value_index" ON
     "liabilities"("value");
-CREATE INDEX "liabilities_interest_index" ON
+create index "liabilities_interest_index" on
     "liabilities"("interest");
 CREATE INDEX "liabilities_due_at_index" ON
     "liabilities"("due_at");
